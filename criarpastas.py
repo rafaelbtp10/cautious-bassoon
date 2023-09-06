@@ -1,13 +1,25 @@
+from time import sleep
 import pandas as pd
 import os
+from tkinter.filedialog import askopenfilename, askdirectory
 
-excel_name = str(input('Insira o nome do arquivo Excel (Com a extensão):\n'))
-file_loc = str(input('Insira o caminho do arquivo Excel:\n')).strip().replace('\\', '/')
-loc_full = file_loc + ('/'+excel_name)
-df = pd.read_excel(loc_full)
+print('='*30)
+print(str('ESCOLHA O ARQUIVO EXCEL:').center(30))
+sleep(0.5)
+excel_name = askopenfilename()
+
+print('='*30)
+print(str('\nESCOLHA O CAMINHO PARA SALVAR AS PASTAS:').center(30))
+sleep(0.5)
+caminho_save = askdirectory()
+
+df = pd.read_excel(excel_name)
 nomes = df.values.T[0].tolist()
-caminho = str(input('Insira o caminho de destino das pastas:\n')).strip().replace('\\', '/')
 
-for i in nomes:
-    path = os.path.join(f'{caminho}', i)
-    os.mkdir(path)
+if '.xlsx' or '.xls' in excel_name:
+    for i in nomes:
+        path = os.path.join(f'{caminho_save}', i)
+        os.mkdir(path)
+print('='*30)
+print(str('\nFIM\n').center(30))
+print('='*30)
